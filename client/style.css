@@ -1,0 +1,276 @@
+* {
+    color: #fff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html {
+    background-color: #101215;
+}
+
+.results {
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    margin-top: 20px;
+
+    justify-items: center;
+}
+
+.results div {
+    width: 280px;
+    height: 158px;
+
+    border: 2px solid #fff;
+    border-radius: 8px;
+
+    background-repeat: no-repeat;
+    background-size: contain;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-direction: column;
+
+    transition: border-color ease-in-out .1s;
+}
+
+.results div:hover {
+    cursor: pointer;
+    border-color: #006388;
+}
+
+.ep-dur, .ep-idx {
+    margin: 10px;
+    padding: 5px;
+    border-radius: 8px;
+    background-color: #00000088;
+    text-align: center;
+}
+
+.ep-idx {
+    order: 1;
+    align-self: flex-start;
+}
+
+.ep-dur {
+    order: 3;
+    align-self: flex-end;
+}
+
+.results div svg:not(.selected) {
+    visibility: hidden;
+}
+
+.results div svg {
+    order: 2;
+    align-self: center;
+}
+
+.info {
+    position: fixed;
+    width: 70vw;
+    height: 70vh;
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    border-radius: 8px;
+    background-color: #10121599;
+    padding: 10px;
+    text-align: center;
+    
+    opacity: 0;
+    transition: opacity ease-in-out 1.7s;
+}
+
+.info ul {
+    overflow-y: scroll;
+    max-height: 80%;
+}
+
+.info li {
+    margin: auto;
+}
+
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+
+#close {
+    all: unset;
+
+    position: fixed;
+    top: 0;
+    right: 0;
+
+    margin: 20px;
+    margin-right: 25px;
+    width: 20px;
+    height: 20px;
+}
+
+h3 {
+    letter-spacing: 2px;
+}
+
+#download {
+    all: unset;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 0;
+}
+
+#download img {
+    width: 100px;
+    margin: 20px;
+    transition: all ease-in-out .2s;
+}
+
+#download img:hover {
+    width: 120px;
+    margin: 10px;
+}
+
+#confirm {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+
+    width: 250px;
+    height: 40px;
+
+    margin: 10px;
+
+    background-color: #fff;
+
+    border: none;
+    border-radius: 8px;
+
+    color: #000;
+}
+
+#confirm:hover {
+    background-color: #006388;
+}
+
+body {
+    position: absolute;
+    display: flex;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.search {
+    margin: auto;
+}
+
+#url {
+    width: 50vw;
+    margin-top: 20px;
+}
+
+#url, input[type='submit'] {
+    background-color: transparent;
+    padding: 10px;
+
+    border: 2px solid #fff;
+    border-radius: 8px;
+
+    transition: border-color ease-in-out .2s;
+    outline: none;
+}
+
+input[type='submit'] {
+    cursor: pointer;
+}
+
+#url:hover, input[type='submit']:hover {
+    border-color: #006388;
+}
+
+#all {
+    position: fixed;
+
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #000;
+
+    margin: 10px;
+    padding: 10px;
+}
+
+.bg {
+    position: absolute;
+    background: linear-gradient(to bottom left, #1793c2 50%, #1b8bbe 50%);
+    /*filter: blur(4px);*/
+
+    width: 0;
+    height: 0;
+
+    border-top-left-radius: 50%;
+
+    margin: 0;
+    padding: 0;
+
+    z-index: 5;
+
+    top: 100vh;
+    left: 100vw;
+}
+
+.animate {
+    animation: pop 1.8s forwards cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+
+.deanimate {
+    animation: unpop 1.2s forwards cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+}
+
+
+@keyframes pop {
+    0% {
+        width: 0;
+        height: 0;
+        top: 100vh;
+        left: 100vw;
+        border-top-left-radius: 100%;
+    }
+
+    70% {
+        border-top-left-radius: 50%;
+    }
+
+    100% {
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        border-top-left-radius: 0%;
+    }
+}
+
+@keyframes unpop {
+    100% {
+        width: 0;
+        height: 0;
+        top: 100vh;
+        left: 100vw;
+    }
+
+    0% {
+        width: 100vw;
+        height: 100vh;
+        top: 0;
+        left: 0;
+    }
+}
+
+  

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset='UTF-8'>
+    <title>Downloader</title>
+    <link rel='stylesheet' href='/client/style.css'>
+</head>
+<body>
+    <form class='search'>
+        <input type='url' id='url' placeholder='Enter url here' required>
+        <input type='submit' value='GO'>
+
+        <div class='results'></div>
+    </form>
+
+    <button id='all' class='hidden' onclick='select_all()'>Toggle</button>
+
+
+    <button id='download' class='hidden' onclick='confirm_dl()'>
+        <img src='/client/download.png' class="hidden">
+    </button>
+
+    <div class='info hidden'>
+        <button id='close' onclick='cancel_dl()'>
+            <svg width="30" height="30">
+                <line x1="10" y1="10" x2="20" y2="20" stroke="black" stroke-width="2"/>
+                <line x1="10" y1="20" x2="20" y2="10" stroke="black" stroke-width="2"/>
+            </svg>
+        </button>
+
+        <h3>ABOUT TO DOWNLOAD</h3>
+
+        <ul></ul>
+
+        <button id='confirm' onclick='init_dl()'>CONFIRM</button>
+    </div>
+
+    <div class="bg"></div>
+
+    <script src='/client/app.js'></script>
+</body>
+</html>
