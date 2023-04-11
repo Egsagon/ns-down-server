@@ -3,6 +3,9 @@ download = document.querySelector('#download')
 idownload = document.querySelector('#download img')
 strart_dl = document.querySelector('#confirm')
 select_all_btn = document.querySelector('#all')
+quals_select_btn = document.querySelector('#qual')
+m3u_btn = document.querySelector('#m3u')
+h3 = document.querySelector('h3')
 
 popup = document.querySelector('.info')
 form = document.querySelector('.search')
@@ -19,12 +22,45 @@ selected = `
 `
 
 SELECTED = []
+M3U_MODE = false
+
+function toggle_m3u() {
+    // Toggle M3U mode
+
+    m3u_btn.classList.toggle('toggled')
+
+    M3U_MODE = !M3U_MODE
+    console.log('toggling m3u', M3U_MODE)
+}
+
+function toggle_qual() {
+    // Toggle quality menu
+
+    // document.querySelectorAll('.qclose').classList.toggle('hidden')
+    document.querySelector('.quals').classList.toggle('hidden')
+
+    quals_select_btn.classList.toggle('opened')
+
+}
 
 function init_dl() {
     // Initialise the download of all selected files
 
+    quality = '?q=' + document.querySelector('.quals').value
+
+    if (M3U_MODE) {
+
+        if (!confirm('Your browser is most likely to block the m3u files. Continue?')) {
+            return
+        }
+
+        for (let ep_url of SELECTED) {
+            window.open(window.location.href + 'frag?url=' + ep_url + quality, '_blank').focus()
+        }
+    }
+
     for (let ep_url of SELECTED) {
-        window.open(window.location.href + 'get?url=' + ep_url, '_blank').focus()
+        window.open(window.location.href + 'get?url=' + ep_url + quality, '_blank').focus()
     }
 }
 
@@ -82,6 +118,8 @@ function confirm_dl() {
     }
 
     console.log('confirming', SELECTED)
+
+    h3.innerHTML = `About to Download ${SELECTED.length} episodes`
 
     if (!SELECTED.length) {
         li = document.createElement('li')
@@ -149,6 +187,8 @@ form.addEventListener('submit', (e) => {
 
             // Show download and select buttons
             select_all_btn.classList.remove('hidden')
+            m3u_btn.classList.remove('hidden')
+            quals_select_btn.classList.remove('hidden')
             download.classList.remove('hidden')
             idownload.classList.remove('hidden')
         }

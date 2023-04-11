@@ -46,12 +46,37 @@ def handle_episodes():
         'url': ep.url,
         'index': ep.index,
         'time': ep.time,
-        'image': ep.get_image_url(),
+        'image': ep.image_url,
         'name': ep.name
     } for ep in episodes]
     
     return flask.jsonify(data)
 
+@app.route('/frag')
+# lim.limit('50/hour')
+def handle_fetch():
+    # Handle giving m3u to client
+
+    url = flask.request.args.get('url')
+    quality = flask.request.args.get('q') or 'best'
+
+    # Error protection
+    if url is None: return flask.jsonify({'error': 'invalid url'})
+
+    # Fetch the anime
+    try:
+        source = nekosama.Episode(url)
+
+    except Exception as err:
+        print('error while geting m3u', err)
+        return flask.jsonify({'error': str(err)})
+
+    # Get the m3u
+    m3u = source.get_fragments(quality = quality)
+
+    fragments = [l for l in m3u.split() if l[0] != '#']
+
+    return flask.jsonify(fragments)
 
 @app.route('/get')
 # @lim.limit('30/hour')
