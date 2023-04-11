@@ -2,33 +2,36 @@
     --border: 0px;
 }
 
-* {
+*:not(option) {
     color: #fff;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 html {
     background-color: #101215;
+    scrollbar-width: thin;
 }
 
 .results {
     display: grid;
-    gap: 15px;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    
+    gap: 20px;
     margin-top: 20px;
-
     justify-items: center;
 }
 
 .results div {
-    width: 280px;
-    height: 158px;
+    width: calc(100% - 2 * 2px);
+
+    aspect-ratio: 16/9;
 
     border: 2px solid #fff;
     border-radius: var(--border);
 
+    background-size: cover;
+    background-position: center;
     background-repeat: no-repeat;
-    background-size: contain;
 
     display: flex;
     justify-content: space-between;
@@ -47,7 +50,7 @@ html {
     margin: 10px;
     padding: 5px;
     border-radius: var(--border);
-    background-color: #00000088;
+    background-color: #000000AA;
     text-align: center;
 }
 
@@ -173,15 +176,60 @@ body {
 
 .search {
     margin: auto;
+    padding: 20px;
+    width: 70vw;
+    flex-direction: column;
+}
+
+form {
+    margin: auto;
+    display: flex;
+    flex-grow: 2;
+    justify-content: stretch;
+}
+
+.search-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: stretch;
 }
 
 #url {
-    width: 50vw;
+    flex-grow: 3;
     margin-top: 0px;
     margin-right: 8px;
 }
 
-#url, input[type='submit'] {
+.back-btn {
+    margin: 0;
+    padding: 10px;
+    font-size: smaller;
+    text-decoration: none;
+    margin-left: 8px;
+}
+
+.filters {
+    margin-left: 8px !important;
+}
+
+select.filters {
+    text-align: center;
+    min-width: 80px;
+}
+
+select option {
+    color: #fff;
+    background-color: #101215;
+}
+
+select option:hover {
+    background-color: #006388;
+}
+
+#url,
+input[type='submit'],
+.back-btn,
+.filters {
     background-color: transparent;
     padding: 10px;
 
@@ -192,12 +240,21 @@ body {
     outline: none;
 }
 
-input[type='submit'] {
+input[type='submit'],
+.back-btn,
+.filters {
     cursor: pointer;
 }
 
-#url:hover, input[type='submit']:hover {
+#url:hover,
+input[type='submit']:hover,
+.back-btn:hover,
+.filters:hover {
     border-color: #006388;
+}
+
+input[type='submit']:hover {
+    background-color: #006388;
 }
 
 .settings {
@@ -269,12 +326,25 @@ input[type='submit'] {
     left: 100vw;
 }
 
+.band {
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    z-index: -1;
+}
+
+.upper {
+    bottom: unset !important;
+    top: 0;
+    rotate: 180deg;
+}
+
 .animate {
-    animation: pop 1s forwards cubic-bezier(0.25, 0.1, 0.25, 1);
+    animation: pop .5s forwards cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .deanimate {
-    animation: unpop 0.6s forwards cubic-bezier(0.25, 0.1, 0.25, 1) !important;
+    animation: unpop .5s forwards cubic-bezier(0.25, 0.1, 0.25, 1) !important;
 }
 
 

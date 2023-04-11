@@ -6,13 +6,14 @@ select_all_btn = document.querySelector('#all')
 quals_select_btn = document.querySelector('#qual')
 m3u_btn = document.querySelector('#m3u')
 h3 = document.querySelector('h3')
-
 popup = document.querySelector('.info')
 form = document.querySelector('.search')
 results = document.querySelector('.results')
 popup_dls = document.querySelector('.info ul')
-
 background = document.querySelector('.bg')
+back_btn = document.querySelector('.search a')
+
+filters = document.querySelectorAll('.filters')
 
 selected = `
 <svg width="20" height="20">
@@ -82,7 +83,23 @@ function cancel_dl() {
         background.classList.remove('deanimate')
         document.body.style.overflowX = 'unset'
         document.body.style.overflowY = 'unset'
-    }, 1050)
+    }, 800)
+}
+
+function get_selection(bkp) {
+
+    SELECTED = []
+
+    nodes = results.querySelectorAll('div')
+
+    for (let node of nodes) {
+        if (node.dataset.selected) {
+            SELECTED.push(node.dataset.url)
+            bkp(node)
+        }
+    }
+
+    return SELECTED
 }
 
 function confirm_dl() {
@@ -97,25 +114,17 @@ function confirm_dl() {
 
     setTimeout(() => {
         popup.style.opacity = 1
-    }, 800)
-
-    nodes = results.querySelectorAll('div')
-
-    SELECTED = []
-
+    }, 200)
+    
     popup_dls.querySelectorAll('li').forEach(el => {
         el.remove()
     })
-
-    for (let node of nodes) {
-        if (node.dataset.selected) {
-            SELECTED.push(node.dataset.url)
-
-            li = document.createElement('li')
-            li.innerHTML = node.dataset.name
-            popup_dls.appendChild(li)
-        }
-    }
+    
+    getSelection(() => {
+        li = document.createElement('li')
+        li.innerHTML = node.dataset.name
+        popup_dls.appendChild(li)
+    })
 
     console.log('confirming', SELECTED)
 
@@ -139,6 +148,15 @@ function select(el) {
     if (svg.contains('selected')) {
         el.setAttribute('data-selected', true)
     }
+
+    // Show or hide the download button
+    if (get_selection(() => {}).length) {
+        download.classList.remove('hidden')
+        idownload.classList.remove('hidden')
+    } else {
+        download.classList.add('hidden')
+        idownload.classList.add('hidden')
+    }
 }
 
 form.addEventListener('submit', (e) => {
@@ -160,6 +178,9 @@ form.addEventListener('submit', (e) => {
 
             try {
                 response = JSON.parse(xhr.response)
+
+                // Void previous episodes
+                results.querySelectorAll('div').forEach((e) => {e.remove()})
             
                 // Load elements to document
                 for (let episode of response) {
@@ -182,18 +203,20 @@ form.addEventListener('submit', (e) => {
             // Error protection
             } catch (err) {alert('Invalid URL'); throw err}
 
-            // Move the search bar
-            // TODO
+            // Show all hidden elements
+            hi = [
+                back_btn
+            ]
 
-            // Show download and select buttons
-            select_all_btn.classList.remove('hidden')
-            m3u_btn.classList.remove('hidden')
-            quals_select_btn.classList.remove('hidden')
-            download.classList.remove('hidden')
-            idownload.classList.remove('hidden')
+            hi.forEach((el) => {el.classList.remove('hidden')})
+
+            // Show filters
+            filters.forEach((e) => {e.classList.remove('hidden')})
+
+            // Change bacground image position
+            document.querySelector('.band').classList.add('upper')
         }
     }
 
     xhr.send()
 })
-

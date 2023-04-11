@@ -7,17 +7,32 @@
     <link rel='stylesheet' href='/client/style.css'>
 </head>
 <body>
-    <form class='search'>
-        <input type='url' id='url' placeholder='Enter url here' required>
-        <input type='submit' value='GO'>
+    <div class='search'>
+        <div class="search-container">
+            <form>
+                <input type='url' id='url' placeholder='Enter url here' required>
+                <input type='submit' value='GO'>
+            </form>
+
+            <a href="/client/index.html" class="back-btn hidden">NO</a>
+
+            <!--Filters-->
+            <button id='toggle' class="filters hidden" onclick='select_all()'>Toggle</button>
+
+            <select name="quality" id="qual" class="filters hidden">
+                <option value="best">1080p</option>
+                <option value="best" selected>Quality</option>
+                <option value="half">720p</option>
+                <option value="worst">480p</option>
+            </select>
+
+        </div>
 
         <div class='results'></div>
-    </form>
+    </div>
 
     <!-- Settings -->
     <div class="settings">
-        <button id='all' class='hidden' onclick='select_all()'>Toggle</button>
-        <button id='m3u' class='hidden' onclick='toggle_m3u()'>M3U mode</button>
 
         <div id='qual' class='hidden'>
             <button class='qclose' onclick='toggle_qual()'>Quality</button>
@@ -48,7 +63,9 @@
         <button id='confirm' onclick='init_dl()'>CONFIRM</button>
     </div>
 
+    <!-- Decorations -->
     <div class="bg"></div>
+    <img src='/client/band.png' class='band'>
 
     <script src='/client/app.js'></script>
 </body>

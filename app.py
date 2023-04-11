@@ -11,7 +11,7 @@ client = nekosama.Client()
 app = flask.Flask(__name__, static_folder = 'client/')
 lim = Limiter(get_remote_address,
               app = app,
-              storage_uri="memory://")
+              storage_uri = "memory://")
 
 @app.route('/')
 def home():
