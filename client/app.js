@@ -15,11 +15,17 @@ back_btn = document.querySelector('.search a')
 
 filters = document.querySelectorAll('.filters')
 
-selected = `
-<svg width="20" height="20">
-  <circle cx="10" cy="10" r="10" fill="rgba(0, 0, 0, 0.5)" />
-  <path d="M3 9 L8 16 L16 3" stroke="green" stroke-width="3" fill="none" />
-</svg>
+anime_template = `
+<div class='ep-info'>
+    <span class='ep-idx'>Episode {index}</span>
+    <span class='ep-dur'>{time} min</span>
+    
+    <svg width="40" height="40">
+        <circle cx="20" cy="20" r="19" fill="#000" opacity="0.5"/>
+        <line x1="10" y1="20" x2="30" y2="20" stroke="#fff" stroke-width="2"/>
+        <line x1="20" y1="10" x2="20" y2="30" stroke="#fff" stroke-width="2"/>
+    </svg>
+</div>
 `
 
 SELECTED = []
@@ -68,7 +74,8 @@ function init_dl() {
 function select_all() {
     // Select all elements
 
-    results.querySelectorAll('div').forEach(el => {select(el)})
+    all = results.querySelectorAll('.ep-info')
+    all.forEach(el => {select(el)})
 }
 
 function cancel_dl() {
@@ -84,6 +91,16 @@ function cancel_dl() {
         document.body.style.overflowX = 'unset'
         document.body.style.overflowY = 'unset'
     }, 800)
+}
+
+function on_hover_ep(el) {
+    info = el.querySelector('.ep-info')
+    info.classList.add('hovered')
+}
+
+function off_hover_ep(el) {
+    info = el.querySelector('.ep-info')
+    info.classList.remove('hovered')
 }
 
 function get_selection(bkp) {
@@ -189,10 +206,15 @@ form.addEventListener('submit', (e) => {
                     el.setAttribute('data-url', episode.url)
                     el.setAttribute('data-name', episode.name)
 
-                    el.innerHTML = `<span class='ep-idx'>Episode ${episode.index}</span><span class='ep-dur'>${episode.time} min</span>`
-                    el.innerHTML += selected // Add the SVG icon
+                    // Create using the anime template
+                    el.innerHTML = anime_template
+                                   .replace('{index}', episode.index)
+                                   .replace('{time}', episode.time)
 
+                    // Element bindings
                     el.addEventListener('click', select.bind(this, el))
+                    el.addEventListener('mouseover', on_hover_ep.bind(this, el))
+                    el.addEventListener('mouseleave', off_hover_ep.bind(this, el))
 
                     // Set the background image
                     el.style.backgroundImage = `url(${episode.image})`
