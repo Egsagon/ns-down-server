@@ -62,12 +62,12 @@ function init_dl() {
         }
 
         for (let ep_url of SELECTED) {
-            window.open(window.location.href + 'frag?url=' + ep_url + quality, '_blank').focus()
+            window.open(window.location.href + '/frag?url=' + ep_url + quality, '_blank').focus()
         }
     }
 
     for (let ep_url of SELECTED) {
-        window.open(window.location.href + 'get?url=' + ep_url + quality, '_blank').focus()
+        window.open(window.location.href + '/get?url=' + ep_url + quality, '_blank').focus()
     }
 }
 
@@ -112,7 +112,7 @@ function get_selection(bkp) {
     for (let node of nodes) {
         if (node.dataset.selected) {
             SELECTED.push(node.dataset.url)
-            bkp(node)
+            bkp(node.dataset.name)
         }
     }
 
@@ -137,9 +137,9 @@ function confirm_dl() {
         el.remove()
     })
     
-    getSelection(() => {
+    get_selection((name) => {
         li = document.createElement('li')
-        li.innerHTML = node.dataset.name
+        li.innerHTML = name
         popup_dls.appendChild(li)
     })
 

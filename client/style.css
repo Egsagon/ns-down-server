@@ -15,14 +15,16 @@ html {
 .results {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+
+    width: calc(100% - 4px);
     
     gap: 20px;
     margin-top: 20px;
-    justify-items: center;
+    justify-items: stretch;
 }
 
 .results div {
-    width: calc(100% - 2 * 2px);
+    width: 100%;
 
     aspect-ratio: 16/9;
 
@@ -353,6 +355,7 @@ input[type='submit']:hover {
     width: 100%;
     height: 100%;
     background-color: transparent;
+    right: 0 !important;
 }
 
 .ep-info.hovered {
